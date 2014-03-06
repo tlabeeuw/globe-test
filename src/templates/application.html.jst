@@ -1,0 +1,6 @@
+<nav id="legend" class="btn-group">
+  <% _(data.years).each(function (year) { %>
+    <button type="button" data-year="<%= year %>" class="year btn btn-primary"><%= year %></button>
+  <% }); %>
+</nav>
+<div id="globe"></div>
