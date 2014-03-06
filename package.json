@@ -1,7 +1,7 @@
 {
-  "name": "siemens",
+  "name": "globe-test",
   "version": "1.0.0",
-  "description": "Siemens demo",
+  "description": "Playing around with spinning globes",
   "main": "siemens.js",
   "engines": {
     "node": "0.10.x"
@@ -9,7 +9,11 @@
   "scripts": {
     "test": "grunt ci-jasmine"
   },
-  "author": "Siemens",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tlabeeuw/globe-test.git"
+  },
+  "author": "Timothy Labeeuw",
   "license": "Proprietary",
   "dependencies": {
     "connect": ">= 2.11.x",
