@@ -1,4 +1,4 @@
-define(['views/application_view'], function (ApplicationView) {
+define(['views/application_view', 'collections/factory_output'], function (ApplicationView, FactoryOutput) {
   describe("Application View", function () {
     beforeEach(function () {
       this.globeFake = jasmine.createSpyObj("globe", [
@@ -6,13 +6,39 @@ define(['views/application_view'], function (ApplicationView) {
       ]);
       spyOn(DAT, "Globe").andReturn(this.globeFake);
 
-      this.view = new ApplicationView();
+      $("body").addClass("loading");
+      this.$specs.html("<div id='application' />");
+
+      this.collection = new FactoryOutput();
+      this.successResponse = {
+        status: 200,
+        responseText: JSON.stringify([
+          {
+            "data": [1, 2, 3],
+            "year": "2023"
+          }, {
+            "data": [1, 2, 3],
+            "year": "2024"
+          }, {
+            "data": [1, 2, 3],
+            "year": "2025"
+          }
+        ])
+      };
+      this.oldWebGLRenderingContext = window.WebGLRenderingContext;
+    });
+
+    afterEach(function () {
+      window.WebGLRenderingContext = this.oldWebGLRenderingContext;
+      jasmine.Ajax.requests.reset();
     });
 
     describe("#render", function () {
       context("when WebGL is available", function () {
         beforeEach(function () {
-          this.$specs.append(this.view.render().el);
+          window.WebGLRenderingContext = true;
+          this.view = new ApplicationView({ collection: this.collection });
+          jasmine.Ajax.requests.mostRecent().response(this.successResponse);
         });
 
         it("displays the legend", function () {
@@ -23,21 +49,30 @@ define(['views/application_view'], function (ApplicationView) {
           expect(this.view.$("#globe").is(":visible")).toBe(true);
           expect(this.globeFake.animate).toHaveBeenCalled();
         });
+
+        it("removes the loading image", function () {
+          expect($("body").hasClass("loading")).toBe(false);
+        });
+
+        it("set the right button as active", function () {
+          expect(this.view.$(".year:nth-child(1)").hasClass("active")).toBe(true);
+          expect(this.view.$(".year:nth-child(2)").hasClass("active")).toBe(false);
+          expect(this.view.$(".year:nth-child(3)").hasClass("active")).toBe(false);
+        });
       });
 
       context("when WebGL is not available", function () {
         beforeEach(function () {
-          this.oldWebGLRenderingContext = window.WebGLRenderingContext;
           window.WebGLRenderingContext = false;
-          this.$specs.append(this.view.render().el);
+          this.view = new ApplicationView({ collection: this.collection });
         });
 
-        afterEach(function () {
-           window.WebGLRenderingContext = this.oldWebGLRenderingContext;
+        it("have no data request", function () {
+          expect(jasmine.Ajax.requests.mostRecent()).toBeUndefined();
         });
 
         it("displays a warning that WebGL is necessary", function () {
-          expect(this.view.$(".globe").is(":visible")).toBe(false);
+          expect(this.view.$("#globe").is(":visible")).toBe(false);
           expect(this.view.$el.text()).toContain("No WebGL");
           expect(this.globeFake.animate).not.toHaveBeenCalled();
         });
@@ -46,13 +81,22 @@ define(['views/application_view'], function (ApplicationView) {
 
     describe("#onYearClick", function () {
       beforeEach(function () {
+        this.view = new ApplicationView({ collection: this.collection });
+        jasmine.Ajax.requests.mostRecent().response(this.successResponse);
         spyOn(this.view.globeView(), "setYear");
-        this.$specs.append(this.view.render().el);
       });
 
       it("set the year on the globe view", function () {
-        this.view.$(".year:first").click();
-        expect(this.view.globeView().setYear).toHaveBeenCalledWith(1990);
+        this.view.$(".year:nth-child(2)").click();
+        expect(this.view.globeView().setYear).toHaveBeenCalledWith(2024);
+      });
+
+      it("set the right button as active", function () {
+        this.view.$(".year:nth-child(3)").click();
+
+        expect(this.view.$(".year:nth-child(1)").hasClass("active")).toBe(false);
+        expect(this.view.$(".year:nth-child(2)").hasClass("active")).toBe(false);
+        expect(this.view.$(".year:nth-child(3)").hasClass("active")).toBe(true);
       });
     });
   });

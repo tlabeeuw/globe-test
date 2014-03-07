@@ -36,12 +36,13 @@ module.exports = function (grunt) {
 
     jasmine: {
       specs: {
-        src: 'src/js/siemens.js',
+        src: 'src/js/<%= pkg.name %>.js',
         options: {
           host : 'http://localhost:9000/',
           specs: 'spec/**/*[Ss]pec.js',
           helpers: 'spec/support/*.js',
-          styles: 'public/siemens.css',
+          keepRunner: true,
+          styles: 'public/<%= pkg.name %>.css',
           template: require('grunt-template-jasmine-requirejs'),
           templateOptions: {
             requireConfigFile: 'src/js/config.js',

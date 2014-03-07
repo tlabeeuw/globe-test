@@ -1,19 +1,14 @@
 define(['backbone', 'globe', 'tween'], function (Backbone, DAT, TWEEN) {
   return Backbone.View.extend({
-    className: "globe",
-
-    initialize: function () {
-      this.collection.fetch({ reset: true });
-      this.listenTo(this.collection, 'reset', this.render);
-    },
+    className: "canvas-wrapper",
 
     render: function () {
       TWEEN.start();
 
-      this.collection.each(function (factoryOutput) {
-        this.globe().addData(factoryOutput.get("data"), {
+      this.collection.each(function (data) {
+        this.globe().addData(data.get("data"), {
           format: 'magnitude',
-          name: factoryOutput.get("year"),
+          name: data.get("year"),
           animated: true
         });
       }, this);
@@ -22,8 +17,6 @@ define(['backbone', 'globe', 'tween'], function (Backbone, DAT, TWEEN) {
 
       this.setTime(0)();
       this.globe().animate();
-
-      $("body").removeClass("loading");
 
       return this;
     },

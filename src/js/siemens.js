@@ -3,8 +3,10 @@
  *
  */
 
-require(['views/application_view', 'jquery'], function(ApplicationView) {
+require(['views/application_view', 'collections/factory_output'], function(ApplicationView, FactoryOutput) {
   $(function () {
-    new ApplicationView().render();
+    new ApplicationView({
+      collection: new FactoryOutput()
+    });
   });
 });
