@@ -118,7 +118,7 @@ module.exports = function (grunt) {
     stylus: {
       compile: {
         files: {
-          'public/siemens.css': 'src/css/siemens.css.styl'
+          'public/<%= pkg.name %>.css': 'src/css/siemens.css.styl'
         },
         options: {
           urlfunc: 'dataUrl'
