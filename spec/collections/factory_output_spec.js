@@ -4,7 +4,7 @@ define(['collections/factory_output'], function(FactoryOutput) {
       this.collection = new FactoryOutput([
         {"year": 1999, data: []},
         {"year": 2000, data: []},
-      ])
+      ]);
     });
 
     describe("#url", function () {

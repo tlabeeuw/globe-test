@@ -4,3 +4,4 @@ node_modules
 _SpecRunner.html
 src/js/template.js
 public/globe_test.*
+public/index.html

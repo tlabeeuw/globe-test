@@ -18,11 +18,11 @@ module.exports = function (grunt) {
 
     concurrent: {
       dev: {
-        tasks: ['connect:specs:keepalive', 'watch:js', 'watch:stylus', 'watch:templates', 'watch:specs']
+        tasks: ['connect:specs:keepalive', 'watch:jade', 'watch:js', 'watch:specs', 'watch:stylus', 'watch:templates']
       },
       options: {
         logConcurrentOutput: true,
-        limit: 5
+        limit: 6
       }
     },
 
@@ -30,6 +30,17 @@ module.exports = function (grunt) {
       specs: {
         options: {
           port: 9000
+        }
+      }
+    },
+
+    jade: {
+      compile: {
+        options: {
+          pretty: true
+        },
+        files: {
+          "public/index.html": "src/static/**/*.jade"
         }
       }
     },
@@ -128,9 +139,17 @@ module.exports = function (grunt) {
     },
 
     watch: {
+      jade: {
+        files: 'src/static/**/*.js',
+        tasks: ['jade:compile', 'notify:watch']
+      },
       js: {
         files: jsInputFiles,
         tasks: ['requirejs:compile', 'notify:watch']
+      },
+      specs: {
+        files: 'specs/**/*.js',
+        tasks: ['jasmine:specs:build', 'notify:watch']
       },
       stylus: {
         files: 'src/css/**/*.css.styl',
@@ -139,16 +158,12 @@ module.exports = function (grunt) {
       templates: {
         files: 'src/templates/**/*.html.jst',
         tasks: ['jst:compile', 'notify:watch']
-      },
-      specs: {
-        files: 'specs/**/*.js',
-        tasks: ['jasmine:specs:build', 'notify:watch']
       }
     }
   });
 
   require('load-grunt-tasks')(grunt, {pattern: ['grunt-*', '!grunt-template-jasmine-requirejs']});
 
-  grunt.registerTask('build', ['jst', 'requirejs:compile', 'stylus:compile', 'jasmine:specs:build']);
+  grunt.registerTask('build', ['jst', 'requirejs:compile', 'stylus:compile', 'jade:compile', 'jasmine:specs:build']);
   grunt.registerTask('test', ['jshint', 'jasmine:specs']);
 };
