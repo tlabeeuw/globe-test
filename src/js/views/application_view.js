@@ -1,6 +1,6 @@
 define(['backbone', 'template', './globe_view', 'collections/factory_output'], function (Backbone, JST, GlobeView, FactoryOutput) {
   return Backbone.View.extend({
-    className: "application",
+    el: "#application",
     years: ["1990", "1995", "2000"],
 
     events: {
