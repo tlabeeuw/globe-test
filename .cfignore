@@ -1,0 +1,5 @@
+.grunt
+.idea
+.git
+node_modules
+_SpecRunner.html

@@ -165,6 +165,6 @@ module.exports = function (grunt) {
   require('load-grunt-tasks')(grunt, {pattern: ['grunt-*', '!grunt-template-jasmine-requirejs']});
 
   grunt.registerTask('default', 'concurrent');
-  grunt.registerTask('build', ['jst', 'requirejs:compile', 'stylus:compile', 'jade:compile', 'jasmine:specs:build']);
+  grunt.registerTask('build', ['jst:compile', 'requirejs:compile', 'stylus:compile', 'jade:compile', 'jasmine:specs:build']);
   grunt.registerTask('test', ['jshint', 'jasmine:specs']);
 };
