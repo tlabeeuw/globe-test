@@ -1,0 +1,28 @@
+@require "colours.css.styl";
+
+.btn-primary {
+  background-color: green;
+  border-color: darken(green, 10%);
+
+  &:hover,
+  &:focus {
+    background-color: darken(green, 10%);
+    border-color: darken(green, 20%);
+  }
+
+  &.active {
+    background-color: darken(green, 20%);
+    border-color: darken(green, 30%);
+  }
+}
+
+.navbar-nav > li > a {
+  color: lightgreen;
+
+  &:hover,
+  &:focus,
+  &.active {
+    color: white;
+    background-color: inherit;
+  }
+}
