@@ -5,7 +5,7 @@ Playing around with spinning Globes.
 ## Development
 
 1. Run `npm install`.
-1. Run `grunt concurrent:dev` to run all the build process whenever a change occurs.
+1. Run `grunt` to run all the build process whenever a change occurs.
 1. Go to [http://localhost:9000/_SpecRunner.html](http://localhost:9000/_SpecRunner.html) to run the tests.
 1. Run `npm start` to run the app on [http://localhost:3000](http://localhost:3000).
 

@@ -1,6 +1,6 @@
 @require "colours.css.styl";
 
-body.siemens {
+body.globe-test {
   background: black;
 
   &.loading {
@@ -8,6 +8,7 @@ body.siemens {
   }
 }
 
+// Bootstrap Overrides
 .btn-primary {
   background-color: green;
   border-color: darken(green, 10%);
@@ -24,9 +25,32 @@ body.siemens {
   }
 }
 
-.siemens {
+.navbar-inverse .navbar-nav > li > a {
+  color: lightgreen;
+
+  &:hover,
+  &:focus,
+  &.active {
+    color: white;
+  }
+}
+
+// GlobeTest
+.globe-test {
   .nav-bar {
     margin-bottom: 4px;
+  }
+
+  header {
+    background-color: green;
+
+    a {
+      text-transform: uppercase;
+    }
+  }
+
+  #main-nav {
+    margin-top: 15px;
   }
 
   #application {

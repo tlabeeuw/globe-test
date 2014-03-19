@@ -2,7 +2,7 @@
   "name": "globe_test",
   "version": "1.0.0",
   "description": "Playing around with spinning globes",
-  "main": "siemens.js",
+  "main": "globe_test.js",
   "engines": {
     "node": "0.10.x"
   },

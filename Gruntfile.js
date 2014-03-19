@@ -6,7 +6,7 @@ module.exports = function (grunt) {
   var jsOutputFile = 'public/<%= pkg.name %>.js';
   var jsInputFiles = [
     'vendor/js/**/*.js',
-    'src/js/siemens.js',
+    'src/js/globe_test.js',
     templateFile,
     'src/js/*.js',
     'src/js/collections/*.js',
@@ -97,7 +97,7 @@ module.exports = function (grunt) {
     notify: {
       watch: {
         options: {
-          title: "Siemens Build",
+          title: "Globe Test Build",
           message: "Finished JST, Uglify & Stylus."
         }
       }
@@ -109,7 +109,7 @@ module.exports = function (grunt) {
           baseUrl: "src/js",
           findNestedDependencies: true,
           generateSourceMaps: true,
-          include: ['config.js', 'siemens.js'],
+          include: ['config.js', 'globe_test.js'],
           mainConfigFile: "src/js/config.js",
           uglify2: {
             compress: true,
@@ -130,7 +130,7 @@ module.exports = function (grunt) {
     stylus: {
       compile: {
         files: {
-          'public/<%= pkg.name %>.css': 'src/css/siemens.css.styl'
+          'public/<%= pkg.name %>.css': 'src/css/<%= pkg.name %>.css.styl'
         },
         options: {
           urlfunc: 'dataUrl'
@@ -140,7 +140,7 @@ module.exports = function (grunt) {
 
     watch: {
       jade: {
-        files: 'src/static/**/*.js',
+        files: 'src/static/**/*.jade',
         tasks: ['jade:compile', 'notify:watch']
       },
       js: {
@@ -164,6 +164,7 @@ module.exports = function (grunt) {
 
   require('load-grunt-tasks')(grunt, {pattern: ['grunt-*', '!grunt-template-jasmine-requirejs']});
 
+  grunt.registerTask('default', 'concurrent');
   grunt.registerTask('build', ['jst', 'requirejs:compile', 'stylus:compile', 'jade:compile', 'jasmine:specs:build']);
   grunt.registerTask('test', ['jshint', 'jasmine:specs']);
 };
